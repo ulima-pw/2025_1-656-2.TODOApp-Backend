@@ -4,18 +4,23 @@
 
 - Path: "/todos"
 - Metodo: GET
-- Input: -
+- Input: 
+
+Query Parameter: estado
+
 - Output
 
 ```json
 [
     {
         "id" : 1,
-        "descripcion" : "comer"
+        "descripcion" : "comer",
+        "estado" : 0
     },
     {
         "id" : 2,
-        "descripcion" : "dormir"
+        "descripcion" : "dormir",
+        "estado" : 1
     }
 ]
 ```
