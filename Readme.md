@@ -24,3 +24,60 @@ Query Parameter: estado
     }
 ]
 ```
+
+## Endpoint: Registrar TODO
+
+- Path: "/todos"
+- Metodo: POST
+- Input: 
+
+```json
+{
+    "descripcion" : "bla bla bla",
+    "estado" : 0
+}
+```
+
+- Output:
+
+```json
+{
+    "msg" : ""
+}
+```
+
+## Endpoint: Modificar TODO
+
+- Path: "/todos"
+- Metodo: PUT
+- Input: 
+
+```json
+{
+    "id" : 1,
+    "descripcion" : "bla bla bla",
+    "estado" : 0
+}
+```
+
+- Output:
+
+```json
+{
+    "msg" : ""
+}
+```
+
+## Endpoint: Eliminar TODO
+
+- Path: "/todos/:id"
+- Metodo: DELETE
+- Input: Path Parameter :id
+
+- Output:
+
+```json
+{
+    "msg" : ""
+}
+```

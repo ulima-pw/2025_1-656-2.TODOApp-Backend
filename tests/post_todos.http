@@ -1,0 +1,7 @@
+POST http://localhost:5000/todos
+Content-Type: application/json
+
+{
+    "descripcion" : "todo",
+    "estado" : 1
+}
