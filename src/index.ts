@@ -1,12 +1,14 @@
 import express, { Request, Response } from "express"
 import bodyParser from "body-parser"
 import dotenv from "dotenv"
+import cors from "cors"
 import { data, TODO } from "./data"
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT
 
+app.use(cors()) // Habilitamos cualquier url de cliente
 app.use(bodyParser.json()) // Configuracion para poder recibir peticiones en formato json
 app.use(bodyParser.urlencoded({
     extended : true
