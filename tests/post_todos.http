@@ -2,6 +2,6 @@ POST http://localhost:5000/todos
 Content-Type: application/json
 
 {
-    "descripcion" : "comer",
-    "estado1" : true
+    "descripcion" : "ver el mundial de clubes",
+    "estado" : false
 }
