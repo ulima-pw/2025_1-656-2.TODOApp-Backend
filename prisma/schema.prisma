@@ -13,3 +13,9 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Todo {
+  id Int @id @default(autoincrement())
+  descripcion String
+  estado Boolean @default(false)
+}
