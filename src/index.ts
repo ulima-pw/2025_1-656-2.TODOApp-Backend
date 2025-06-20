@@ -38,8 +38,8 @@ app.get("/todos", async (req : Request, resp : Response) => {
     resp.json(listaTODOs)
 })
 
-app.post("/todos", (req : Request, resp : Response) => {
-    const listaTODOs = data
+app.post("/todos", async (req : Request, resp : Response) => {
+    const prisma = new PrismaClient()
     const todo = req.body
 
     if (todo == undefined) {
@@ -56,21 +56,13 @@ app.post("/todos", (req : Request, resp : Response) => {
         return
     }
 
-    if (todo.estado == undefined) {
-        resp.status(400).json({
-            msg : "Debe enviar un estado del TODO."
-        })
-        return
-    }
-
-    listaTODOs.push({
-        id : new Date().getTime(),
-        descripcion : todo.descripcion,
-        estado : todo.estado
+    const todoCreado = await prisma.todo.create({
+        data : todo
     })
 
     resp.json({
-        msg : ""
+        msg : "",
+        todo : todoCreado
     })
 
 })
