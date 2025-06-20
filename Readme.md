@@ -4,7 +4,7 @@
 
 - Path: "/todos"
 - Metodo: GET
-- Input: Query Parameter: estado
+- Input: Query Parameter: estado[0:false y 1:true]
 
 - Output
 

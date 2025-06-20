@@ -3,6 +3,7 @@ import bodyParser from "body-parser"
 import dotenv from "dotenv"
 import cors from "cors"
 import { data, TODO } from "./data"
+import { PrismaClient } from "./generated/prisma"
 dotenv.config()
 
 const app = express()
@@ -18,25 +19,23 @@ app.get("/", (req : Request, resp : Response) => {
     resp.send("Endpoint raiz de Backend de TODOApp")
 })
 
-app.get("/todos", (req : Request, resp : Response) => {
-    const listaTODOs = data
-
+app.get("/todos", async (req : Request, resp : Response) => {
+    const prisma = new PrismaClient()
     const estado = req.query.estado
 
     if (estado == undefined) {
+        const listaTODOs = await prisma.todo.findMany()
         resp.json(listaTODOs)
         return
     }
 
-    const nuevaLista : TODO[] = []
-
-    for (let t of listaTODOs) {
-        if (t.estado.toString() == estado){
-            nuevaLista.push(t)
+    const listaTODOs = await prisma.todo.findMany({
+        where : {
+            estado : estado == "0" ? false : true
         }
-    }
+    })
 
-    resp.json(nuevaLista)
+    resp.json(listaTODOs)
 })
 
 app.post("/todos", (req : Request, resp : Response) => {
