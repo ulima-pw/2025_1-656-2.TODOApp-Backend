@@ -56,19 +56,26 @@ app.post("/todos", async (req : Request, resp : Response) => {
         return
     }
 
-    const todoCreado = await prisma.todo.create({
-        data : todo
-    })
-
-    resp.json({
-        msg : "",
-        todo : todoCreado
-    })
-
+    try {
+        const todoCreado = await prisma.todo.create({
+            data : todo
+        })
+        resp.json({
+            msg : "",
+            todo : todoCreado
+        })
+        return
+    }catch( e ) {
+        resp.status(400).json({
+            msg : "Hubo un error creando un TODO.",
+            details : e
+        })
+        return
+    }
 })
 
-app.put("/todos", (req: Request, resp : Response) => {
-    const listaTODOs = data
+app.put("/todos", async (req: Request, resp : Response) => {
+    const prisma = new PrismaClient()
     const todo = req.body
 
     if (todo.id == undefined) {
@@ -78,52 +85,51 @@ app.put("/todos", (req: Request, resp : Response) => {
         return
     }
 
-    for (let t of listaTODOs) {
-        if (t.id == todo.id) {
-            if (todo.descripcion != undefined)
-            {
-                t.descripcion = todo.descripcion
-            }
-            t.estado = todo.estado != undefined ? todo.estado : t.estado
-
-            resp.json({
-                msg : ""
-            })
-            return
-        }
+    try {
+        const todoModificado = await prisma.todo.update({
+            where : {
+                id : todo.id
+            },
+            data : todo
+        })
+        resp.json({
+            msg : "",
+            todo : todoModificado
+        })
+    }catch ( e ) {
+        resp.status(400).json({
+            msg : "Debe enviar un id que exista."
+        })
     }
-
-    resp.status(400).json({
-        msg : "Debe enviar un id que exista."
-    })
 })
 
-app.delete("/todos/:id", (req: Request, resp : Response) => {
-    const listaTODOs = data
+app.delete("/todos/:id", async (req: Request, resp : Response) => {
+    const prisma = new PrismaClient()
     const id = req.params.id
 
-    let indice : number | null = null
-    let contador = 0
-    for (let t of listaTODOs) {
-        if (t.id.toString() == id) {
-            indice = contador
-            break
-        }
-        contador++
+    if (id == undefined) {
+        resp.status(400).json({
+            msg : "Debe enviar un id."
+        })
+        return
     }
 
-    if (indice == null) {
+    try {
+        await prisma.todo.delete({
+            where : {
+                id : parseInt(id)
+            }
+        })
+        resp.json({
+            msg : ""
+        })
+        return
+    }catch(e) {
         resp.status(400).json({
             msg : "Debe enviar un id que exista."
         })
         return
-    } 
-
-    listaTODOs.splice(indice, 1)
-
-    resp.json({
-        msg : ""
-    })
+    }
 })
 
 app.listen(PORT, () => {

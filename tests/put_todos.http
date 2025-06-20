@@ -2,6 +2,6 @@ PUT http://localhost:5000/todos
 Content-Type: application/json
 
 {
-    "id" : 1,
-    "estado" : 1
+    "id" : 9,
+    "estado" : true
 }
