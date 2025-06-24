@@ -19,3 +19,19 @@ model Todo {
   descripcion String
   estado Boolean @default(false)
 }
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  username String
+  estado Boolean @default(true)
+  infPersonal InfPersonal?
+}
+
+model InfPersonal {
+  id Int @id @default(autoincrement())
+  telefono String
+  direccion String
+  email String
+  usuarioId Int @unique
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+}
