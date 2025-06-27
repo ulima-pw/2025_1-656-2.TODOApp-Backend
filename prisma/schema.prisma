@@ -18,10 +18,10 @@ model Todo {
   id Int @id @default(autoincrement())
   descripcion String
   estado Boolean @default(false)
-  usuarioId Int
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
-  proyectoId Int
-  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
+  usuarioId Int?
+  usuario Usuario? @relation(fields: [usuarioId], references: [id])
+  proyectoId Int?
+  proyecto Proyecto? @relation(fields: [proyectoId], references: [id])
 }
 
 model Proyecto {
