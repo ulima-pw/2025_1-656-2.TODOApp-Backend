@@ -3,5 +3,7 @@ Content-Type: application/json
 
 {
     "descripcion" : "ver el mundial de clubes",
-    "estado" : false
+    "estado" : false,
+    "usuarioId" : 1,
+    "proyectoId" : 3
 }

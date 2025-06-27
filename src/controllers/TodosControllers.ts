@@ -18,8 +18,12 @@ const TodosController = () => {
 
         if (estado == undefined) {
             const listaTODOs = await prisma.todo.findMany({
+                relationLoadStrategy : "join",
                 where : {
                     usuarioId : parseInt(usuarioId.toString())
+                },
+                include : {
+                    proyecto : true
                 }
             })
             resp.json(listaTODOs)
@@ -27,9 +31,13 @@ const TodosController = () => {
         }
 
         const listaTODOs = await prisma.todo.findMany({
+            relationLoadStrategy : "join",
             where: {
                 estado: estado == "0" ? false : true,
                 usuarioId : parseInt(usuarioId.toString())
+            },
+            include : {
+                proyecto : true
             }
         })
 
@@ -43,6 +51,20 @@ const TodosController = () => {
         if (todo == undefined) {
             resp.status(400).json({
                 msg: "Debe enviar data de TODO."
+            })
+            return
+        }
+
+        if (todo.usuarioId == undefined) {
+            resp.status(400).json({
+                msg: "Debe enviar un usuarioId como parte del TODO."
+            })
+            return
+        }
+
+        if (todo.proyectoId == undefined) {
+            resp.status(400).json({
+                msg: "Debe enviar un proyectoId como parte del TODO."
             })
             return
         }
