@@ -7,16 +7,29 @@ const TodosController = () => {
     router.get("/", async (req: Request, resp: Response) => {
         const prisma = new PrismaClient()
         const estado = req.query.estado
+        const usuarioId = req.query.usuarioid
+
+        if (usuarioId == undefined) {
+            resp.status(400).json({
+                msg : "Debe enviar un usuarioId."
+            })
+            return
+        }
 
         if (estado == undefined) {
-            const listaTODOs = await prisma.todo.findMany()
+            const listaTODOs = await prisma.todo.findMany({
+                where : {
+                    usuarioId : parseInt(usuarioId.toString())
+                }
+            })
             resp.json(listaTODOs)
             return
         }
 
         const listaTODOs = await prisma.todo.findMany({
             where: {
-                estado: estado == "0" ? false : true
+                estado: estado == "0" ? false : true,
+                usuarioId : parseInt(usuarioId.toString())
             }
         })
 
