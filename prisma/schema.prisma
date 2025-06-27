@@ -18,6 +18,18 @@ model Todo {
   id Int @id @default(autoincrement())
   descripcion String
   estado Boolean @default(false)
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  proyectoId Int
+  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
+}
+
+model Proyecto {
+  id Int @id @default(autoincrement())
+  nombre String
+  estado Boolean
+  usuarios Usuario[] @relation("ProyectoXUsuario")
+  todos Todo[]
 }
 
 model Usuario {
@@ -25,6 +37,8 @@ model Usuario {
   username String
   estado Boolean @default(true)
   infPersonal InfPersonal?
+  todos Todo[]
+  proyectos Proyecto[] @relation("ProyectoXUsuario")
 }
 
 model InfPersonal {
