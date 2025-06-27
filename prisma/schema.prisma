@@ -36,6 +36,7 @@ model Proyecto {
 model Usuario {
   id Int @id @default(autoincrement())
   username String
+  password String?
   estado Boolean @default(true)
   infPersonal InfPersonal?
   todos Todo[]
