@@ -3,6 +3,7 @@ import bodyParser from "body-parser"
 import dotenv from "dotenv"
 import cors from "cors"
 import TodosController from "./controllers/TodosControllers"
+import UsuariosController from "./controllers/UsuariosController"
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.get("/", (req : Request, resp : Response) => {
 })
 
 app.use("/todos", TodosController())
+app.use("/usuarios", UsuariosController())
 
 
 app.listen(PORT, () => {
